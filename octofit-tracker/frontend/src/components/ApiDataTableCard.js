@@ -27,7 +27,7 @@ function resolveApiBaseUrl() {
   return 'http://localhost:8000';
 }
 
-function ApiDataTableCard({ title, resourcePath, primaryFields }) {
+function ApiDataTableCard({ title, resourcePath, primaryFields, endpointHint }) {
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
@@ -111,6 +111,12 @@ function ApiDataTableCard({ title, resourcePath, primaryFields }) {
         <div className="mb-3">
           <span className="badge text-bg-info">Active API Endpoint</span>
           <code className="ms-2 text-break">{endpoint}</code>
+          {endpointHint && (
+            <>
+              <span className="badge text-bg-secondary ms-2">Codespace Pattern</span>
+              <code className="ms-2 text-break">{endpointHint}</code>
+            </>
+          )}
         </div>
 
         <form
