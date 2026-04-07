@@ -14,10 +14,50 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+import os
+
 from django.contrib import admin
+from django.views.generic import RedirectView
 from django.urls import path, include
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.routers import DefaultRouter
+
+from .views import (
+    ActivityViewSet,
+    LeaderboardViewSet,
+    TeamViewSet,
+    UserViewSet,
+    WorkoutViewSet,
+)
+
+codespace_name = os.environ.get('CODESPACE_NAME')
+if codespace_name:
+    base_url = f"https://{codespace_name}-8000.app.github.dev"
+else:
+    base_url = "http://localhost:8000"
+
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'teams', TeamViewSet)
+router.register(r'workouts', WorkoutViewSet)
+router.register(r'activities', ActivityViewSet)
+router.register(r'leaderboards', LeaderboardViewSet)
+
+
+@api_view(['GET'])
+def api_root(request):
+    return Response({
+        'users': f'{base_url}/api/users/',
+        'teams': f'{base_url}/api/teams/',
+        'workouts': f'{base_url}/api/workouts/',
+        'activities': f'{base_url}/api/activities/',
+        'leaderboards': f'{base_url}/api/leaderboards/',
+    })
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('octofit_tracker.urls')),
+    path('', RedirectView.as_view(pattern_name='api-root', permanent=False)),
+    path('api/', api_root, name='api-root'),
+    path('api/', include(router.urls)),
 ]

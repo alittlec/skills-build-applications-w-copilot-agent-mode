@@ -1,5 +1,13 @@
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from .models import User, Team, Workout, Activity, Leaderboard
+
+
+class UrlTests(SimpleTestCase):
+    def test_root_redirects_to_api_root(self):
+        response = self.client.get('/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/api/')
 
 class ModelTests(TestCase):
     def setUp(self):
