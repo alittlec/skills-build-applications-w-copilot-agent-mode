@@ -1,5 +1,32 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+function resolveApiBaseUrl() {
+  const explicitBaseUrl = process.env.REACT_APP_API_BASE_URL?.trim();
+  if (explicitBaseUrl) {
+    return explicitBaseUrl.replace(/\/+$/, '');
+  }
+
+  const codespaceName = process.env.REACT_APP_CODESPACE_NAME?.trim();
+  if (codespaceName) {
+    return `https://${codespaceName}-8000.app.github.dev`;
+  }
+
+  if (typeof window !== 'undefined') {
+    const { hostname } = window.location;
+    const codespaceHostMatch = hostname.match(/^(.*)-3000\.app\.github\.dev$/);
+
+    if (codespaceHostMatch?.[1]) {
+      return `https://${codespaceHostMatch[1]}-8000.app.github.dev`;
+    }
+
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:8000';
+    }
+  }
+
+  return 'http://localhost:8000';
+}
+
 function ApiDataTableCard({ title, resourcePath, primaryFields }) {
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState('');
@@ -7,11 +34,8 @@ function ApiDataTableCard({ title, resourcePath, primaryFields }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const codespace = process.env.REACT_APP_CODESPACE_NAME;
-  const baseUrl = codespace
-    ? `https://${codespace}-8000.app.github.dev`
-    : 'http://localhost:8000';
-  const endpoint = `${baseUrl}/api/${resourcePath}/`;
+  const baseUrl = resolveApiBaseUrl();
+  const endpoint = `${baseUrl}/api/${resourcePath.replace(/^\/+|\/+$/g, '')}/`;
 
   const getPrimaryText = useCallback((item) => {
     for (const field of primaryFields) {
@@ -82,6 +106,11 @@ function ApiDataTableCard({ title, resourcePath, primaryFields }) {
           <a className="link-primary fw-semibold" href={endpoint} target="_blank" rel="noreferrer">
             Open REST Endpoint
           </a>
+        </div>
+
+        <div className="mb-3">
+          <span className="badge text-bg-info">Active API Endpoint</span>
+          <code className="ms-2 text-break">{endpoint}</code>
         </div>
 
         <form
