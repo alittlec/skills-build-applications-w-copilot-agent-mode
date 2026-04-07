@@ -1,0 +1,125 @@
+body {
+  background: radial-gradient(circle at top right, #e3f0ff 0%, #f4f9ff 45%, #ffffff 100%);
+  color: #213547;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.octofit-heading {
+  color: #0f4bc0;
+}
+
+.octofit-subtext {
+  color: #35557a;
+}
+
+.octofit-header-card {
+  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+}
+
+.octofit-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(15, 75, 192, 0.22);
+}
+
+.octofit-nav {
+  background: linear-gradient(90deg, #1f6feb, #0f4bc0);
+}
+
+.octofit-nav .nav-link {
+  color: #e9f2ff;
+  transition: all 0.2s ease;
+}
+
+.octofit-nav .nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.octofit-nav .nav-link.active {
+  color: #0f4bc0;
+  background-color: #ffffff;
+}
+
+a,
+.link-primary {
+  color: #0f63d9 !important;
+}
+
+a:hover,
+.link-primary:hover {
+  color: #0a49a3 !important;
+}
+
+.btn-primary {
+  background-color: #1769e0;
+  border-color: #1769e0;
+}
+
+.btn-primary:hover {
+  background-color: #0f55b8;
+  border-color: #0f55b8;
+}
+
+.btn-outline-primary {
+  color: #1769e0;
+  border-color: #1769e0;
+}
+
+.btn-outline-primary:hover {
+  background-color: #1769e0;
+  border-color: #1769e0;
+}
+
+.btn-outline-secondary {
+  color: #35557a;
+  border-color: #8ba9ce;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #eaf2ff;
+  border-color: #7c9ac1;
+  color: #234062;
+}
+
+.octofit-table {
+  table-layout: fixed;
+  border: 1px solid #cfe0f7;
+}
+
+.octofit-table thead th,
+.table-primary th {
+  background-color: #d8e8ff !important;
+  color: #123e7d !important;
+  border-color: #b7cff3 !important;
+}
+
+.octofit-table tbody tr:nth-of-type(odd) {
+  background-color: #f8fbff;
+}
+
+.octofit-table tbody tr:hover {
+  background-color: #ecf4ff;
+}
+
+.card {
+  border: 1px solid #d7e6fb;
+}
+
+.octofit-summary-cell {
+  max-width: 520px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal pre {
+  font-size: 0.85rem;
+}
